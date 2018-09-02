@@ -1,0 +1,41 @@
+<!doctype html>
+<head>
+    <title>Hello from Flask</title>
+    <link href="{{ url_for('static', filename='dropzone.min.css') }}" rel="stylesheet">
+</head>
+
+<body>
+<form action="/upload/"
+      class="dropzone"
+      id="my-awesome-dropzone"></form>
+
+<div class="row" id="detect-result">
+
+</div>
+<script src="{{ url_for('static', filename='dropzone.min.js') }}"></script>
+<script>
+
+    Dropzone.options.myAwesomeDropzone = {
+        init: function () {
+            this.on("success", function (file, data) {
+                var img = document.createElement("img");
+                img.src = data.img
+                var caption = document.createElement("div");
+                caption.className = "caption";
+                caption.innerHTML = "检测结果为：" + data.result;
+                // var thumbnail = document.createElement("div");
+                // thumbnail.className = "thumbnail";
+                // thumbnail.appendChild(img);
+
+                var result = document.createElement("div");
+                result.className = "col-xs-6 col-md-3";
+                result.appendChild(img);
+                result.appendChild(caption);
+
+                var results = document.getElementById("detect-result");
+                results.appendChild(result);
+            });
+        }
+    };
+</script>
+</body>
